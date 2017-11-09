@@ -19,10 +19,10 @@ func _ready():
 	var player = get_node("Player")
 	var beginning_pos = update_child_pos(player)
 	player.set_pos(beginning_pos)
-	for n in range(10):
-	#	var grid_pos = Vector2(randi() % int(grid_size.x), randi() % int(grid_size.y))
-	#	if not grid_pos in positions:
-	#		positions.append(grid_pos)
+	for n in range(5):
+		var grid_pos = Vector2(randi() % int(grid_size.x), randi() % int(grid_size.y))
+		if not grid_pos in positions:
+			positions.append(grid_pos)
 	spawning(10)
 	
 func spawning(num):
