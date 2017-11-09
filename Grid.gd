@@ -8,6 +8,7 @@ enum ENTITY_TYPES {PLAYER}
 var grid_size = Vector2(16, 16)
 var grid = []
 var positions = []
+onready var red = load("res://red.png")
 
 func _ready():
 	randomize()
@@ -23,18 +24,12 @@ func _ready():
 		var grid_pos = Vector2(randi() % int(grid_size.x), randi() % int(grid_size.y))
 		if not grid_pos in positions:
 			positions.append(grid_pos)
-	spawning(10)
-	
-func spawning(num):
 	#############
-	for i in range(num):
-		print(i)
-		for pos in positions:
-			print(pos, pos.y, pos.x)
-			var new_obstacle = get_node("Red")
-			new_obstacle.set_pos(map_to_world(pos) + half_tile_size)
-			grid[pos.x][pos.y] = new_obstacle
-			add_child(new_obstacle)
+	#for pos in positions:
+	#	var new_obstacle = red.instance()
+	#	new_obstacle.set_pos(map_to_world(pos) + half_tile_size)
+	#	grid[pos.x][pos.y] = new_obstacle
+	#	add_child(new_obstacle)
 	
 func is_cell_vacant(pos, direction):
 	var grid_pos = world_to_map(pos) + direction
