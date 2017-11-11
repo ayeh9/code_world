@@ -1,53 +1,22 @@
-extends TileMap
+extends Node2D
 
-
-var tile_size = get_cell_size()
-var half_tile_size = tile_size/2
-
-enum ENTITY_TYPES {PLAYER}
-var grid_size = Vector2(16, 16)
-var grid = []
-var positions = []
-onready var red = load("res://red.png")
+onready var grid = get_parent()
 
 func _ready():
-	randomize()
-	for x in range(grid_size.x):
-		grid.append([])
-		for y in range(grid_size.y):
-			grid[x].append(null)
-	
-	var player = get_node("Player")
-	var beginning_pos = update_child_pos(player)
-	player.set_pos(beginning_pos)
-	for n in range(5):
-		var grid_pos = Vector2(randi() % int(grid_size.x), randi() % int(grid_size.y))
-		if not grid_pos in positions:
-			positions.append(grid_pos)
-	#############
-	#for pos in positions:
-	#	var new_obstacle = red.instance()
-	#	new_obstacle.set_pos(map_to_world(pos) + half_tile_size)
-	#	grid[pos.x][pos.y] = new_obstacle
-	#	add_child(new_obstacle)
-	
-func is_cell_vacant(pos, direction):
-	var grid_pos = world_to_map(pos) + direction
-	
-	if grid_pos.x < grid_size.x and grid_pos.x >= 0:
-		if grid_pos.y < grid_size.y and grid_pos.y >= 0:
-			return true if grid[grid_pos.x][grid_pos.y] == null else false
-	return false
-	
-func update_child_pos(child_node):
-	var grid_pos = world_to_map(child_node.get_pos())
-	print(grid_pos)
-	grid[grid_pos.x][grid_pos.y] = null
-	
-	var new_grid_pos = grid_pos + child_node.direction
-	grid[new_grid_pos.x][new_grid_pos.y] = child_node.type
-	
-	var target_pos = map_to_world(new_grid_pos) + half_tile_size
-	return target_pos
+
 	pass
 
+func _draw():
+	var Line_color = Color(255, 255, 255)
+	var Line_width = 2
+	var window_size = OS.get_window_size()
+	
+	for x in range(grid.grid_size.x + 1):
+		var col_pos = x * grid.tile_size.x
+		var limit = grid.grid_size.y * grid.tile_size.y
+		draw_line(Vector2(col_pos, 0), Vector2(col_pos, limit), Line_color, Line_width)
+	
+	for y in range(grid.grid_size.y + 1):
+		var row_pos = y * grid.tile_size.y
+		var limit = grid.grid_size.x * grid.tile_size.x
+		draw_line(Vector2(0, row_pos), Vector2(limit, row_pos), Line_color, Line_width)
